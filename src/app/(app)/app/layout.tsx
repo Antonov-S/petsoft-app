@@ -11,7 +11,7 @@ export default function PrivateLayout({
     <>
       <BackgroundPatten />
 
-      <div className="max-w-[1500px] mx-auto px-4">
+      <div className="flex flex-col max-w-[1500px] mx-auto px-4 min-h-screen">
         <AppHeader />
         {children}
         <AppFooter />
