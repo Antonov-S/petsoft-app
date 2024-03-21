@@ -5,7 +5,17 @@ import SearchForm from "@/components/search-form";
 import PetList from "@/components/pet-list";
 import PetDetails from "@/components/pet-details";
 
-export default function Page() {
+import { PETS_API_URL } from "@/lib/constants";
+
+export default async function Page() {
+  const pets = await fetch(PETS_API_URL);
+  const data = await pets.json();
+
+  if (data.length === 0) {
+    throw new Error("No pets found");
+  }
+  console.log(data);
+
   return (
     <main>
       <div className="flex items-center justify-between text-white py-8">
@@ -20,7 +30,7 @@ export default function Page() {
 
         <div className="relative md:row-start-2 md:row-span-full md:col-start-1 md:col-span-1">
           <ContentBlock>
-            <PetList />
+            <PetList pets={data} />
           </ContentBlock>
         </div>
 
