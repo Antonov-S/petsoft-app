@@ -1,18 +1,9 @@
 import Image from "next/image";
 
-import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
+import { Pet } from "@/lib/types";
 
 type PetListProps = {
   pets: Pet[];
-};
-
-type Pet = {
-  id: string;
-  name: string;
-  ownerName: string;
-  imageUrl: string;
-  age: number;
-  notes: string;
 };
 
 export default function PetList({ pets }: PetListProps) {
