@@ -5,8 +5,6 @@ import SearchForm from "@/components/search-form";
 import PetList from "@/components/pet-list";
 import PetDetails from "@/components/pet-details";
 
-import { PETS_API_URL } from "@/lib/constants";
-
 export default async function Page() {
   return (
     <main>
