@@ -12,11 +12,11 @@ export default function PetList() {
       {pets.map(pet => (
         <li key={pet.id}>
           <button
-            onChange={() => handleChangeSelectedPetId(pet.id)}
+            onClick={() => handleChangeSelectedPetId(pet.id)}
             className={cn(
               "flex items-center h-[70px] w-full cursor-pointer px-5 text-base gap-3 hover:bg-[#EFF1F2] focus:bg-[#EFF1F2] transition",
               {
-                "bg-[#EFF1F2]": pet.id === selectedPetId
+                "bg-[#EFF1F2]": selectedPetId === pet.id
               }
             )}
           >
