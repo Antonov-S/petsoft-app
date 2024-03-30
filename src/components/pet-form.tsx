@@ -1,18 +1,22 @@
 "use client";
 
 import { usePetContext } from "@/lib/hooks";
+import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
 
 type PetFormProps = {
   actionType: "add" | "edit";
+  onFormSubmission: () => void;
 };
 
-export default function PetForm({ actionType }: PetFormProps) {
+export default function PetForm({
+  actionType,
+  onFormSubmission
+}: PetFormProps) {
   const { handleAddPet } = usePetContext();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +31,7 @@ export default function PetForm({ actionType }: PetFormProps) {
     };
 
     handleAddPet(newPet);
+    onFormSubmission();
   };
 
   return (
