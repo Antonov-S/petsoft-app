@@ -48,7 +48,7 @@ export default function PetButton({
           </DialogTitle>
         </DialogHeader>
 
-        <PetForm />
+        <PetForm actionType={actionType} />
       </DialogContent>
     </Dialog>
   );

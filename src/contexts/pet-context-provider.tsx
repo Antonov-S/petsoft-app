@@ -32,6 +32,10 @@ export default function PetContextProvider({
   const numberOfPets = pets.length;
 
   //handlers
+  const handleAddPet = (newPet: Pet) => {
+    setPets([...pets, newPet]);
+  };
+
   const handleCheckoutPet = (id: string) => {
     setPets(prev => prev.filter(p => p.id !== id));
     setSelectedPetId(null);
