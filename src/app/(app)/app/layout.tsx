@@ -3,20 +3,14 @@ import AppHeader from "@/components/app-header";
 import BackgroundPatten from "@/components/background-patten";
 import PetContextProvider from "@/contexts/pet-context-provider";
 import SearchContextProvider from "@/contexts/search-context-provider";
-import { PETS_API_URL } from "@/lib/constants";
-import { Pet } from "@/lib/types";
+import prisma from "../../../lib/db";
 
 export default async function PrivateLayout({
   children
 }: {
   children: React.ReactNode;
 }) {
-  const pets = await fetch(PETS_API_URL);
-  const data: Pet[] = await pets.json();
-
-  if (data.length === 0) {
-    throw new Error("No pets found");
-  }
+  const pets = await prisma.pet.findMany();
   return (
     <>
       <BackgroundPatten />
@@ -25,7 +19,7 @@ export default async function PrivateLayout({
         <AppHeader />
 
         <SearchContextProvider>
-          <PetContextProvider data={data}>{children}</PetContextProvider>
+          <PetContextProvider data={pets}>{children}</PetContextProvider>
         </SearchContextProvider>
 
         <AppFooter />
