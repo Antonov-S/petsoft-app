@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import { addPet } from "@/actions/actions";
 
 type PetFormProps = {
   actionType: "add" | "edit";
@@ -19,29 +20,29 @@ export default function PetForm({
 }: PetFormProps) {
   const { handleAddPet, handleEditPet, selectedPet } = usePetContext();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.currentTarget);
 
-    const pet = {
-      name: formData.get("name") as string,
-      ownerName: formData.get("ownerName") as string,
-      imageUrl: (formData.get("imageUrl") as string) || PET_IMAGE_PLACEHOLDER,
-      age: +(formData.get("age") as string),
-      notes: formData.get("notes") as string
-    };
+  //   const pet = {
+  //     name: formData.get("name") as string,
+  //     ownerName: formData.get("ownerName") as string,
+  //     imageUrl: (formData.get("imageUrl") as string) || PET_IMAGE_PLACEHOLDER,
+  //     age: +(formData.get("age") as string),
+  //     notes: formData.get("notes") as string
+  //   };
 
-    if (actionType === "add") {
-      handleAddPet(pet);
-    } else if (actionType === "edit") {
-      handleEditPet(selectedPet!.id, pet);
-    }
+  //   if (actionType === "add") {
+  //     handleAddPet(pet);
+  //   } else if (actionType === "edit") {
+  //     handleEditPet(selectedPet!.id, pet);
+  //   }
 
-    onFormSubmission();
-  };
+  //   onFormSubmission();
+  // };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col">
+    <form action={addPet} className="flex flex-col">
       <div className="space-y-3 relative">
         <div className="space-y-1">
           <Label htmlFor="name">Name</Label>
