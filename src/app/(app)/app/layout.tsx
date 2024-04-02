@@ -3,6 +3,8 @@ import AppHeader from "@/components/app-header";
 import BackgroundPatten from "@/components/background-patten";
 import PetContextProvider from "@/contexts/pet-context-provider";
 import SearchContextProvider from "@/contexts/search-context-provider";
+import { Toaster } from "@/components/ui/sonner";
+
 import prisma from "../../../lib/db";
 
 export default async function PrivateLayout({
@@ -24,6 +26,8 @@ export default async function PrivateLayout({
 
         <AppFooter />
       </div>
+
+      <Toaster position="top-right" />
     </>
   );
 }

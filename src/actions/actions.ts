@@ -8,15 +8,21 @@ import { sleep } from "@/lib/utils";
 
 export async function addPet(formData) {
   await sleep(3000);
-  await prisma.pet.create({
-    data: {
-      name: formData.get("name"),
-      ownerName: formData.get("ownerName"),
-      notes: formData.get("notes"),
-      imageUrl: formData.get("imageUrl") || PET_IMAGE_PLACEHOLDER,
-      age: +formData.get("age")
-    }
-  });
+  try {
+    await prisma.pet.create({
+      data: {
+        name: formData.get("name"),
+        ownerName: formData.get("ownerName"),
+        notes: formData.get("notes"),
+        imageUrl: formData.get("imageUrl") || PET_IMAGE_PLACEHOLDER,
+        age: +formData.get("age")
+      }
+    });
 
-  revalidatePath("/app", "layout");
+    revalidatePath("/app", "layout");
+  } catch (error) {
+    return {
+      message: "Could not add pet"
+    };
+  }
 }

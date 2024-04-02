@@ -1,5 +1,7 @@
 "use client";
 
+import { toast } from "sonner";
+
 import { usePetContext } from "@/lib/hooks";
 import { addPet } from "@/actions/actions";
 
@@ -22,7 +24,10 @@ export default function PetForm({
   return (
     <form
       action={async formData => {
-        await addPet(formData);
+        const error = await addPet(formData);
+        if (error) {
+          toast.warning(error.message);
+        }
         onFormSubmission();
       }}
       className="flex flex-col"
