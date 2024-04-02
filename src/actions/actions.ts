@@ -40,11 +40,24 @@ export async function editPet(petId, formData) {
         age: +formData.get("age")
       }
     });
+    revalidatePath("/app", "layout");
   } catch (error) {
     return {
       message: "Could not edit pet"
     };
   }
+}
 
-  revalidatePath("/app", "layout");
+export async function deletePet(petId) {
+  await sleep(3000);
+  try {
+    await prisma.pet.delete({
+      where: { id: petId }
+    });
+    revalidatePath("/app", "layout");
+  } catch (error) {
+    return {
+      message: "Could not delete pet"
+    };
+  }
 }
