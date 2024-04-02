@@ -26,3 +26,25 @@ export async function addPet(formData) {
     };
   }
 }
+
+export async function editPet(petId, formData) {
+  await sleep(3000);
+  try {
+    await prisma.pet.update({
+      where: { id: petId },
+      data: {
+        name: formData.get("name"),
+        ownerName: formData.get("ownerName"),
+        notes: formData.get("notes"),
+        imageUrl: formData.get("imageUrl") || PET_IMAGE_PLACEHOLDER,
+        age: +formData.get("age")
+      }
+    });
+  } catch (error) {
+    return {
+      message: "Could not edit pet"
+    };
+  }
+
+  revalidatePath("/app", "layout");
+}

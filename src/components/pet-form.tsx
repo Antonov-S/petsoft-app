@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 
 import { usePetContext } from "@/lib/hooks";
-import { addPet } from "@/actions/actions";
+import { addPet, editPet } from "@/actions/actions";
 
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -24,10 +24,20 @@ export default function PetForm({
   return (
     <form
       action={async formData => {
-        const error = await addPet(formData);
-        if (error) {
-          toast.warning(error.message);
+        if (actionType === "add") {
+          const error = await addPet(formData);
+          if (error) {
+            toast.warning(error.message);
+            return;
+          }
+        } else if (actionType === "edit") {
+          const error = await editPet(selectedPet!.id, formData);
+          if (error) {
+            toast.warning(error.message);
+            return;
+          }
         }
+
         onFormSubmission();
       }}
       className="flex flex-col"
