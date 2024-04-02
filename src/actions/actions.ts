@@ -1,8 +1,9 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
 import prisma from "@/lib/db";
-import { revalidatePath } from "next/cache";
 
 export async function addPet(formData) {
   await prisma.pet.create({
