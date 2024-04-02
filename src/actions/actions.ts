@@ -54,10 +54,11 @@ export async function deletePet(petId) {
     await prisma.pet.delete({
       where: { id: petId }
     });
-    revalidatePath("/app", "layout");
   } catch (error) {
     return {
       message: "Could not delete pet"
     };
   }
+
+  revalidatePath("/app", "layout");
 }
