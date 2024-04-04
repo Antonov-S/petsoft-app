@@ -1,14 +1,13 @@
 "use client";
 
-import { toast } from "sonner";
-
 import { usePetContext } from "@/lib/hooks";
-import { addPet, editPet } from "@/actions/actions";
 
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import PetFormBtn from "./pet-form-btn";
+import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
+import { Pet } from "@prisma/client";
 
 type PetFormProps = {
   actionType: "add" | "edit";
@@ -19,26 +18,26 @@ export default function PetForm({
   actionType,
   onFormSubmission
 }: PetFormProps) {
-  const { selectedPet } = usePetContext();
+  const { selectedPet, handleAddPet, handleEditPet } = usePetContext();
 
   return (
     <form
       action={async formData => {
-        if (actionType === "add") {
-          const error = await addPet(formData);
-          if (error) {
-            toast.warning(error.message);
-            return;
-          }
-        } else if (actionType === "edit") {
-          const error = await editPet(selectedPet!.id, formData);
-          if (error) {
-            toast.warning(error.message);
-            return;
-          }
-        }
-
         onFormSubmission();
+        const petData = {
+          name: formData.get("name") as string,
+          ownerName: formData.get("ownerName") as string,
+          imageUrl:
+            (formData.get("imageUrl") as string) || PET_IMAGE_PLACEHOLDER,
+          age: +(formData.get("age") as string),
+          notes: formData.get("notes") as string
+        };
+
+        if (actionType === "add") {
+          await handleAddPet(petData);
+        } else if (actionType === "edit") {
+          await handleEditPet(selectedPet!.id, petData);
+        }
       }}
       className="flex flex-col"
     >

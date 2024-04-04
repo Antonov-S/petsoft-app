@@ -2,43 +2,31 @@
 
 import { revalidatePath } from "next/cache";
 
-import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
 import prisma from "@/lib/db";
 import { sleep } from "@/lib/utils";
+import { Pet } from "@prisma/client";
 
-export async function addPet(formData) {
-  await sleep(3000);
+export async function addPet(pet: Omit<Pet, "id">) {
+  await sleep(2000);
   try {
     await prisma.pet.create({
-      data: {
-        name: formData.get("name"),
-        ownerName: formData.get("ownerName"),
-        notes: formData.get("notes"),
-        imageUrl: formData.get("imageUrl") || PET_IMAGE_PLACEHOLDER,
-        age: +formData.get("age")
-      }
+      data: pet
     });
-
-    revalidatePath("/app", "layout");
   } catch (error) {
     return {
       message: "Could not add pet"
     };
   }
+
+  revalidatePath("/app", "layout");
 }
 
-export async function editPet(petId, formData) {
+export async function editPet(petId: string, petData: Omit<Pet, "id">) {
   await sleep(3000);
   try {
     await prisma.pet.update({
       where: { id: petId },
-      data: {
-        name: formData.get("name"),
-        ownerName: formData.get("ownerName"),
-        notes: formData.get("notes"),
-        imageUrl: formData.get("imageUrl") || PET_IMAGE_PLACEHOLDER,
-        age: +formData.get("age")
-      }
+      data: petData
     });
     revalidatePath("/app", "layout");
   } catch (error) {
@@ -48,7 +36,7 @@ export async function editPet(petId, formData) {
   }
 }
 
-export async function deletePet(petId) {
+export async function deletePet(petId: string) {
   await sleep(3000);
   try {
     await prisma.pet.delete({
