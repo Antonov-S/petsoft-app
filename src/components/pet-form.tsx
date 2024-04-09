@@ -7,7 +7,6 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import PetFormBtn from "./pet-form-btn";
 import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
-import { Pet } from "@prisma/client";
 
 type PetFormProps = {
   actionType: "add" | "edit";
