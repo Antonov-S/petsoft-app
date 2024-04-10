@@ -1,5 +1,9 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { usePetContext } from "@/lib/hooks";
 
 import { Input } from "./ui/input";
@@ -7,21 +11,10 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import PetFormBtn from "./pet-form-btn";
 import { PET_IMAGE_PLACEHOLDER } from "@/lib/constants";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 type PetFormProps = {
   actionType: "add" | "edit";
   onFormSubmission: () => void;
-};
-
-type TPetForm = {
-  name: string;
-  ownerName: string;
-  imageUrl: string;
-  age: number;
-  notes: string;
 };
 
 const petFormSchema = z.object({
@@ -38,6 +31,8 @@ const petFormSchema = z.object({
   age: z.coerce.number().int().positive().max(99),
   notes: z.union([z.literal(""), z.string().trim().max(1000)])
 });
+
+type TPetForm = z.infer<typeof petFormSchema>;
 
 export default function PetForm({
   actionType,
