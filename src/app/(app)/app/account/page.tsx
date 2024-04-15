@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import ContentBlock from "@/components/content-block";
 import H1 from "@/components/h1";
 import { auth } from "@/lib/auth";
+import SignOutButton from "@/components/sign-out-btn";
 
 export default async function Page() {
   const session = await auth();
@@ -15,9 +16,11 @@ export default async function Page() {
     <main>
       <H1 className="my-8 text-white">Your account</H1>
 
-      <ContentBlock className="h-[500px] flex justify-center items-center">
+      <ContentBlock className="h-[500px] flex flex-col gap-3 justify-center items-center">
         {/* TODO */}
         <p>Logged in as {session.user.email}</p>
+
+        <SignOutButton />
       </ContentBlock>
     </main>
   );
