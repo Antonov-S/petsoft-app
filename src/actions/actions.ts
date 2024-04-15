@@ -9,7 +9,7 @@ import { signIn } from "@/lib/auth";
 
 // --- user actions ---
 export async function logIn(formData: FormData) {
-  const authData = Object.entries(formData.entries());
+  const authData = Object.fromEntries(formData.entries());
 
   await signIn("credentials", authData);
 }
