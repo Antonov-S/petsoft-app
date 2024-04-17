@@ -1,12 +1,13 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 
 import prisma from "@/lib/db";
 import { sleep } from "@/lib/utils";
 import { petFormSchema, petIdSchema } from "@/lib/validations";
-import { signIn, signOut } from "@/lib/auth";
+import { auth, signIn, signOut } from "@/lib/auth";
 
 // --- user actions ---
 export async function logIn(formData: FormData) {
@@ -35,6 +36,11 @@ export async function signUp(formData: FormData) {
 
 // ---pet actions ---
 export async function addPet(pet: unknown) {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/login");
+  }
+
   await sleep(1000);
 
   const validatedPet = petFormSchema.safeParse(pet);
@@ -46,7 +52,14 @@ export async function addPet(pet: unknown) {
 
   try {
     await prisma.pet.create({
-      data: validatedPet.data
+      data: {
+        ...validatedPet.data,
+        user: {
+          connect: {
+            id: session.user.id
+          }
+        }
+      }
     });
   } catch (error) {
     return {
