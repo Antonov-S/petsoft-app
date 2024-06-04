@@ -8,7 +8,7 @@ import prisma from "@/lib/db";
 import { sleep } from "@/lib/utils";
 import { petFormSchema, petIdSchema } from "@/lib/validations";
 import { auth, signIn, signOut } from "@/lib/auth";
-import { checkAuth } from "@/lib/server-utils";
+import { checkAuth, getPetByPetId } from "@/lib/server-utils";
 
 // --- user actions ---
 export async function logIn(formData: FormData) {
@@ -37,9 +37,8 @@ export async function signUp(formData: FormData) {
 
 // ---pet actions ---
 export async function addPet(pet: unknown) {
-  const session = await checkAuth();
-
   await sleep(1000);
+  const session = await checkAuth();
 
   const validatedPet = petFormSchema.safeParse(pet);
   if (!validatedPet.success) {
@@ -85,12 +84,7 @@ export async function editPet(petId: unknown, petData: unknown) {
   }
 
   // authorization check
-  const pet = await prisma.pet.findUnique({
-    where: {
-      id: validatedPetId.data
-    }
-  });
-
+  const pet = await getPetByPetId(validatedPetId.data);
   if (!pet) {
     return {
       message: "Pet not found."
@@ -132,6 +126,19 @@ export async function deletePet(petId: unknown) {
   }
 
   // authorization check
+  const pet = await getPetByPetId(validatedPetId.data);
+  if (!pet) {
+    return {
+      message: "Pet not found."
+    };
+  }
+  if (pet.userId !== session.user.id) {
+    return {
+      message: "Not authorized."
+    };
+  }
+
+  // database mutation
   try {
     await prisma.pet.delete({
       where: { id: validatedPetId.data }
