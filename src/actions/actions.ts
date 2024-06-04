@@ -8,6 +8,7 @@ import prisma from "@/lib/db";
 import { sleep } from "@/lib/utils";
 import { petFormSchema, petIdSchema } from "@/lib/validations";
 import { auth, signIn, signOut } from "@/lib/auth";
+import { checkAuth } from "@/lib/server-utils";
 
 // --- user actions ---
 export async function logIn(formData: FormData) {
@@ -36,10 +37,7 @@ export async function signUp(formData: FormData) {
 
 // ---pet actions ---
 export async function addPet(pet: unknown) {
-  const session = await auth();
-  if (!session?.user) {
-    redirect("/login");
-  }
+  const session = await checkAuth();
 
   await sleep(1000);
 
@@ -74,10 +72,7 @@ export async function editPet(petId: unknown, petData: unknown) {
   await sleep(1000);
 
   // authentication check
-  const session = await auth();
-  if (!session?.user) {
-    redirect("/login");
-  }
+  const session = await checkAuth();
 
   // validation
   const validatedPet = petFormSchema.safeParse(petData);
@@ -125,6 +120,10 @@ export async function editPet(petId: unknown, petData: unknown) {
 export async function deletePet(petId: unknown) {
   await sleep(1000);
 
+  // authentication check
+  const session = await checkAuth();
+
+  // validation
   const validatedPetId = petIdSchema.safeParse(petId);
   if (!validatedPetId.success) {
     return {
@@ -132,6 +131,7 @@ export async function deletePet(petId: unknown) {
     };
   }
 
+  // authorization check
   try {
     await prisma.pet.delete({
       where: { id: validatedPetId.data }
