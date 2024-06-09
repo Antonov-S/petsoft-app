@@ -9,6 +9,7 @@ import { sleep } from "@/lib/utils";
 import { authSchema, petFormSchema, petIdSchema } from "@/lib/validations";
 import { auth, signIn, signOut } from "@/lib/auth";
 import { checkAuth, getPetByPetId } from "@/lib/server-utils";
+import { Prisma } from "@prisma/client";
 
 // --- user actions ---
 export async function logIn(formData: unknown) {
@@ -47,12 +48,22 @@ export async function signUp(formData: unknown) {
 
   const { email, password } = validatedFormData.data;
   const hashedPassword = await bcrypt.hash(password, 10);
-  await prisma.user.create({
-    data: {
-      email,
-      hashedPassword
+  try {
+    await prisma.user.create({
+      data: {
+        email,
+        hashedPassword
+      }
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return {
+          message: "Email already exists."
+        };
+      }
     }
-  });
+  }
 
   await signIn("credentials", formData);
 }
