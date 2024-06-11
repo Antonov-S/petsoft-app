@@ -1,12 +1,13 @@
 "use client";
 
-import { createCheckoutSession } from "@/actions/actions";
+import { useTransition } from "react";
 
+import { createCheckoutSession } from "@/actions/actions";
 import H1 from "@/components/h1";
 import { Button } from "@/components/ui/button";
 
 function Page({ searchParams }) {
-  console.log(searchParams);
+  const [isPending, startTransition] = useTransition();
 
   return (
     <main className="flex flex-col items-center space-y-10">
@@ -14,8 +15,11 @@ function Page({ searchParams }) {
 
       {!searchParams.success && (
         <Button
+          disabled={isPending}
           onClick={async () => {
-            await createCheckoutSession();
+            startTransition(async () => {
+              await createCheckoutSession();
+            });
           }}
         >
           Buy lifetime access for $19.99
