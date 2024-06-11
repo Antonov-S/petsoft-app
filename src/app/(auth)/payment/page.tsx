@@ -6,7 +6,11 @@ import { createCheckoutSession } from "@/actions/actions";
 import H1 from "@/components/h1";
 import { Button } from "@/components/ui/button";
 
-function Page({ searchParams }) {
+function Page({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const [isPending, startTransition] = useTransition();
 
   return (
