@@ -45,12 +45,17 @@ export async function logIn(prevState: unknown, formData: unknown) {
 }
 
 export async function logOut() {
-  // await sleep(1000);
+  if (process.env.NODE_ENV === "development") {
+    await sleep(1000);
+  }
+
   await signOut({ redirectTo: "/" });
 }
 
 export async function signUp(prevState: unknown, formData: unknown) {
-  await sleep(1000);
+  if (process.env.NODE_ENV === "development") {
+    await sleep(1000);
+  }
 
   // check if formData is a FormData type
   if (!(formData instanceof FormData)) {
@@ -94,7 +99,9 @@ export async function signUp(prevState: unknown, formData: unknown) {
 
 // ---pet actions ---
 export async function addPet(pet: unknown) {
-  await sleep(1000);
+  if (process.env.NODE_ENV === "development") {
+    await sleep(1000);
+  }
   const session = await checkAuth();
 
   const validatedPet = petFormSchema.safeParse(pet);
@@ -169,7 +176,9 @@ export async function editPet(petId: unknown, petData: unknown) {
 }
 
 export async function deletePet(petId: unknown) {
-  await sleep(1000);
+  if (process.env.NODE_ENV === "development") {
+    await sleep(1000);
+  }
 
   // authentication check
   const session = await checkAuth();
