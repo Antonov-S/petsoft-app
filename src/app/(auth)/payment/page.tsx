@@ -1,14 +1,14 @@
 "use client";
 
-import { useTransition } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 
 import { createCheckoutSession } from "@/actions/actions";
 import H1 from "@/components/h1";
 import { Button } from "@/components/ui/button";
 
-function Page({
+export default function Page({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -24,7 +24,7 @@ function Page({
       {searchParams.success && (
         <Button
           onClick={async () => {
-            update(true);
+            await update(true);
             router.push("/app/dashboard");
           }}
           disabled={status === "loading" || session?.user.hasAccess}
@@ -51,8 +51,7 @@ function Page({
           Payment successful! You now have lifetime access to PetSoft.
         </p>
       )}
-
-      {searchParams.cancel && (
+      {searchParams.cancelled && (
         <p className="text-sm text-red-700">
           Payment cancelled. You can try again.
         </p>
@@ -60,5 +59,3 @@ function Page({
     </main>
   );
 }
-
-export default Page;
