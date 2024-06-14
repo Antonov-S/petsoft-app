@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p id="start" align="center">
+<br>
 
-## Getting Started
+  <h1 align="center" color='7582EB'>PetSoft</h1>
+  
+</p>
+Next.js 13 project with full CRUD, optimistic UI, server actions, auth, payments, and more!
 
-First, run the development server:
+## Table of Contents
 
-```bash
+1. <a href="#overview">Overview</a>
+2. <a href="#appConfig">Application Configurations</a>
+3. <a href="#builtWith">Built with</a>
+4. <a href="#appShots">Screenshots</a>
+
+<h2 id="overview">Overview</h2>
+PetSoft is a web application intended for learning purposes. It has the following functionality:
+
+- protected routes available only to registered users
+- dashboard with all available pets
+- full CRUD and optimistic UI implemented with server actions
+- JWT is stored in a cookie (Authentication)
+- redirect rules via Next-Auth
+
+<h2 id="appConfig">Application Configurations</h2>
+
+**Node.js version:** `v20.10.0`
+
+**Test user:** example@gmail.com **Password:** example
+
+### Available Scripts
+
+```javascript
+# install dependencies
+npm install
+
+# start
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# db seed
+npx prisma db seed
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Application Nav
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![Application Nav](/appScreens/petSoft_nextNav.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<h2 id="builtWith">Built With</h2>
 
-## Learn More
+- TypeScript
+- Next.js
+- Prisma
+- PostgreSQL
+- Tailwind CSS
+- Shadcn UI
+- NextAuth
+- React-Hook-Form
+- Zod
+- Stripe
+- Bcrypt js
+- Sonner
 
-To learn more about Next.js, take a look at the following resources:
+<h2 id="appShots">Screenshots</h2>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Home View
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Home View](/appScreens/petSoft_main.png)
 
-## Deploy on Vercel
+### Registered user dashboard
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![City Events](/appScreens/petSoft_dashboard.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Pet CRUD
+
+![Event View](/appScreens/petSoft_petForm.png)
+
+### Stripe for payments
+
+![Event View](/appScreens/petSoft_stripe.png)
+
+### Payment completion and redirect
+
+![Event View](/appScreens/petSoft_payments.png)
