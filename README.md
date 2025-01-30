@@ -18,11 +18,11 @@ PetSoft is a web application designed for learning purposes, built with Next.js 
 
 ### Key Features:
 
-- protected routes available only to registered users
-- dashboard with all available pets
-- full CRUD and optimistic UI implemented with server actions
+- Protected routes available only to registered users
+- Dashboard with all available pets
+- Full CRUD and optimistic UI implemented with server actions
 - JWT is stored in a cookie (Authentication)
-- redirect rules via Next-Auth
+- Redirect rules via Next-Auth
 
 ### Built With:
 
@@ -41,29 +41,31 @@ PetSoft is a web application designed for learning purposes, built with Next.js 
 
 <h2 id="appConfig">Application Configurations</h2>
 
-### Node version
+### Node Version
 
-```javascript
-Node version: v20.10.0
+```plaintext
+Node.js version: v20.10.0
 ```
 
-### Test Credentials
+### **Test Credentials**
 
-```javascript
+```plaintext
 User: example@gmail.com
 Password: example
 ```
 
-### Available Scripts
+### Available Commands
 
-```javascript
-# install dependencies
+Below are the main scripts used to set up and run the application:
+
+```bash
+# Install dependencies
 npm install
 
-# start
+# Start the development server
 npm run dev
 
-# db seed
+# Seed the database
 npx prisma db seed
 ```
 
@@ -73,7 +75,7 @@ npx prisma db seed
 
 <h2 id="envExample">Environment Variables</h2>
 
-To run this project, create a `.env` file in the root directory and include the following variables:
+To run this project, create a `.env` file in the root directory and configure the following variables:
 
 ```
 POSTGRES_URL=
@@ -98,18 +100,18 @@ CANONICAL_URL=
 
 ![Home View](/appScreens/petSoft_main.png)
 
-### Registered user dashboard
+### Registered User Dashboard
 
-![City Events](/appScreens/petSoft_dashboard.png)
+![Dashboard](/appScreens/petSoft_dashboard.png)
 
 ### Pet CRUD
 
-![Event View](/appScreens/petSoft_petForm.png)
+![Pet CRUD](/appScreens/petSoft_petForm.png)
 
-### Stripe for payments
+### Stripe Payment Integration
 
-![Event View](/appScreens/petSoft_stripe.png)
+![Stripe Payment](/appScreens/petSoft_stripe.png)
 
-### Payment completion and redirect
+### Payment Completion and Redirect
 
-![Event View](/appScreens/petSoft_payments.png)
+![Payment Success](/appScreens/petSoft_payments.png)
